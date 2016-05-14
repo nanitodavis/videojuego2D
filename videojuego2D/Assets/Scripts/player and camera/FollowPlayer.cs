@@ -19,6 +19,7 @@ public class FollowPlayer : MonoBehaviour {
 	void Update () {
 		ahead.x = target.transform.position.x + 3f;
 		ahead.y = target.transform.position.y + 4f;
+		ahead.z = target.transform.position.z + 4f;
 		newPos = new Vector3 (ahead.x, ahead.y, ahead.z);
 		transform.position = newPos;
 		
