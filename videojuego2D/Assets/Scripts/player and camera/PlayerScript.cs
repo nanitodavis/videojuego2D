@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
 	private Rigidbody rb;
-	public float velocity = 13f;
+	public float velocity = 2f;
 	public float jumpForce = 250;
 	private int health = 100;
 	private bool walk;
@@ -17,17 +17,26 @@ public class PlayerScript : MonoBehaviour {
 		rb = GetComponent<Rigidbody>();
 		modelTransform = gameObject.transform.GetChild (0);
 	}
-	
+
 	// Update is called once per frame
 	void FixedUpdate () {
-		if(Input.GetKey(KeyCode.D)&&rb.velocity.x<=5f){
-			rb.AddForce(new Vector3(1,0,0)*velocity);
-		}
-		else if(Input.GetKey(KeyCode.A)&&rb.velocity.x>=13f){
-			rb.AddForce(new Vector3(-1,0,0)*velocity);
+		//rb.velocity = velocity;
+		if(Input.GetKey(KeyCode.D)){
+			transform.position += transform.right * velocity * Time.deltaTime;
+			transform.rotation = Quaternion.Slerp (transform.rotation, Quaternion.LookRotation (new Vector3(0f,0f,0f)), 1f);
+			//rb.AddForce(new Vector3(1,0,0)*velocity);
 		}
 		else if(Input.GetKey(KeyCode.A)){
-			rb.AddForce(new Vector3(-1,0,0)*velocity);
+			transform.position -= transform.right * velocity * Time.deltaTime;
+			//rb.AddForce(new Vector3(-1,0,0)*velocity);
+		}
+		if(Input.GetKey(KeyCode.W)){
+			transform.position += transform.forward * velocity * Time.deltaTime;
+			//rb.AddForce(new Vector3(0,0,1)*velocity);
+		}
+		else if(Input.GetKey(KeyCode.S)){
+			transform.position -= transform.forward * velocity * Time.deltaTime;
+			//rb.AddForce(new Vector3(0,0,-1)*velocity);
 		}
 		if(Input.GetKeyDown(KeyCode.Space)&&jump){
 			rb.AddForce(new Vector3(0,1,0)*jumpForce);
